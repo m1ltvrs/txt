@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Whirlpool Games</title>
+  
+   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><defs><radialGradient id=%22g%22 cx=%2250%25%22 cy=%2250%25%22 r=%2250%25%22><stop offset=%220%25%22 stop-color=%22%23ffffff%22/><stop offset=%2240%25%22 stop-color=%22%235d5ced%22/><stop offset=%22100%25%22 stop-color=%22%230b0e14%22/></radialGradient></defs><circle cx=%2250%22 cy=%2250%22 r=%2248%22 fill=%22%230b0e14%22/><path d=%22M50 15c19.3 0 35 15.7 35 35S69.3 85 50 85 15 69.3 15 50s15.7-35 35-35zm0 10c-13.8 0-25 11.2-25 25s11.2 25 25 25 25-11.2 25-25-11.2-25-25-25z%22 fill=%22url(%23g%22 opacity=%22.8%22/><path d=%22M50 30c11 0 20 9 20 20s-9 20-20 20-20-9-20-20 9-20 20-20z%22 fill=%22%23a855f7%22/></svg>">
+  
+   <style>
+     :root {
+         --bg-deep: #0b0e14;
+         --bg-sidebar: #0f131b;
+         --accent: #5d5ced;
+         --text-main: #ffffff;
+         --text-dim: #94a3b8;
+            --border: #1e293b;
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-hover: rgba(255, 255, 255, 0.08);
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            transition: all 0.5s ease;
+            background-size: cover !important;
+            background-position: center !important;
+            animation: bg-drift 12s ease-in-out infinite alternate;
+        }
+
+        @keyframes bg-drift {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(15deg); }
+        }
+
+        .theme-dark::before {
+            background: 
+                radial-gradient(circle at 15% 25%, rgba(93, 92, 237, 0.25) 0%, transparent 45%),
+                radial-gradient(circle at 85% 75%, rgba(168, 85, 247, 0.18) 0%, transparent 45%),
+                radial-gradient(circle at 50% 50%, rgba(93, 92, 237, 0.05) 0%, transparent 60%),
+                var(--bg-deep);
+        }
+
+        .theme-light {
+            --bg-deep: #f0f2f5;
+            --bg-sidebar: #ffffff;
+            --accent: #5d5ced;
+            --text-main: #1a1a1a;
+            --text-dim: #64748b;
+            --border: #e2e8f0;
+        }
+        .theme-light::before {
+            background: 
+                radial-gradient(at 10% 10%, rgba(93, 92, 237, 0.18) 0%, transparent 55%),
+                radial-gradient(at 90% 90%, rgba(168, 85, 247, 0.18) 0%, transparent 55%),
+                #f0f2f5;
+        }
+
+        .theme-cyber {
+            --bg-deep: #050505;
+            --bg-sidebar: #000000;
+            --accent: #ff00ff;
+            --text-main: #00ff00;
+            --text-dim: #008800;
+            --border: #333333;
+        }
+        .theme-cyber::before {
+            background: 
+                linear-gradient(rgba(0, 255, 0, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 0, 0.1) 1px, transparent 1px),
+                black;
+            background-size: 50px 50px !important;
+            animation: cyber-shift 8s linear infinite;
+        }
+
+        .theme-ocean {
+            --bg-deep: #001219;
+            --bg-sidebar: #001d29;
+            --accent: #00b4d8;
+            --text-main: #caf0f8;
+            --text-dim: #90e0ef;
+            --border: #0077b6;
+        }
+        .theme-ocean::before {
+            background: 
+                radial-gradient(circle at 50% -10%, rgba(0, 180, 216, 0.4) 0%, transparent 60%),
+                radial-gradient(circle at 20% 80%, rgba(0, 119, 182, 0.2) 0%, transparent 40%),
+                linear-gradient(180deg, #001219 0%, #002533 100%);
+        }
+
+        .theme-forest {
+            --bg-deep: #060d0a;
+            --bg-sidebar: #0a1410;
+            --accent: #10b981;
+            --text-main: #ecfdf5;
+            --text-dim: #64748b;
+            --border: #065f46;
+        }
+        .theme-forest::before {
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(16, 185, 129, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(5, 150, 105, 0.1) 0%, transparent 50%),
+                #060d0a;
+        }
+
+        .theme-solar {
+            --bg-deep: #0f0a06;
+            --bg-sidebar: #1a120b;
+            --accent: #f59e0b;
+            --text-main: #fffbeb;
+            --text-dim: #a16207;
+            --border: #451a03;
+        }
+        .theme-solar::before {
+            background: 
+                radial-gradient(circle at 50% 50%, rgba(245, 158, 11, 0.12) 0%, transparent 70%),
+                #0f0a06;
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        aside {
+            width: 280px;
+            background-color: var(--bg-sidebar);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            padding: 40px 24px;
+            z-index: 10;
+            position: relative;
+        }
+
+        .side-ico {
+            width: 20px; height: 20px;
+            position: relative;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .ico-home { width: 14px; height: 12px; border: 2px solid currentColor; border-top: 0; position: relative; margin-top: 4px; }
+        .ico-home::before { content: ''; position: absolute; top: -8px; left: -3px; width: 16px; height: 16px; border: 2px solid currentColor; border-bottom: 0; border-right: 0; transform: rotate(45deg); }
+
+        .ico-net { width: 16px; height: 16px; border: 2px solid currentColor; border-radius: 50%; position: relative; }
+        .ico-net::before { content: ''; position: absolute; width: 6px; height: 16px; border: 1px solid currentColor; border-radius: 50%; left: 4px; top: -1px; }
+        .ico-net::after { content: ''; position: absolute; width: 16px; height: 6px; border: 1px solid currentColor; border-radius: 50%; top: 4px; left: -1px; }
+
+        .ico-game { width: 18px; height: 12px; background: currentColor; border-radius: 6px 6px 4px 4px; position: relative; opacity: 0.8; }
+        .ico-game::before { content: ''; position: absolute; width: 4px; height: 4px; background: var(--bg-sidebar); border-radius: 50%; left: 3px; top: 4px; box-shadow: 8px 0 0 var(--bg-sidebar); }
+
+        .ico-extra { 
+            width: 8px; height: 8px; 
+            background: currentColor; 
+            transform: rotate(45deg); 
+            position: relative;
+            animation: extra-shimmer 2.5s ease-in-out infinite;
+        }
+        .ico-extra::before, .ico-extra::after {
+            content: ''; position: absolute; 
+            background: currentColor; border-radius: 2px;
+        }
+        .ico-extra::before { width: 16px; height: 2px; left: -4px; top: 3px; }
+        .ico-extra::after { width: 2px; height: 16px; left: 3px; top: -4px; }
+
+        .ico-apps {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2px;
+            width: 14px;
+            height: 14px;
+        }
+        .ico-apps .dot {
+            width: 5px; height: 5px;
+            background: currentColor;
+            border-radius: 1px;
+            animation: app-pulse 2s infinite ease-in-out;
+        }
+        .ico-apps .dot:nth-child(2) { animation-delay: 0.2s; }
+        .ico-apps .dot:nth-child(3) { animation-delay: 0.4s; }
+        .ico-apps .dot:nth-child(4) { animation-delay: 0.6s; }
+        
+        @keyframes app-pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(0.8); opacity: 0.5; }
+        }
+
+        .ico-set { width: 14px; height: 14px; border: 3px dotted currentColor; border-radius: 50%; animation: spin-vortex 4s linear infinite; }
+
+        @keyframes extra-shimmer {
+            0%, 100% { transform: rotate(45deg) scale(1); filter: drop-shadow(0 0 0px var(--accent)); }
+            50% { transform: rotate(45deg) scale(1.2); filter: drop-shadow(0 0 6px var(--accent)); opacity: 0.7; }
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 50px;
+            cursor: pointer;
+        }
+
+        .vortex-logo {
+            position: relative;
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            filter: drop-shadow(0 0 8px var(--accent));
+        }
+
+        .spiral {
+            position: absolute;
+            border: 3px solid transparent;
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin-vortex linear infinite;
+        }
+
+        .s1 { width: 38px; height: 38px; animation-duration: 2s; border-right-color: var(--accent); opacity: 0.9; }
+        .s2 { width: 24px; height: 24px; animation-duration: 1.5s; animation-direction: reverse; border-bottom-color: #a855f7; opacity: 0.7; }
+        .s3 { width: 10px; height: 10px; animation-duration: 1s; border-left-color: #ffffff; }
+
+        @keyframes spin-vortex {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .logo-text { 
+            font-weight: 900; 
+            font-size: 1.4rem; 
+            letter-spacing: 2px; 
+            color: var(--text-main);
+            background: linear-gradient(to right, var(--text-main), var(--text-dim));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 14px 20px;
+            border-radius: 14px;
+            color: var(--text-dim);
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-bottom: 8px;
+        }
+
+        .nav-item.active {
+            background-color: var(--accent);
+            color: white;
+            box-shadow: 0 4px 25px rgba(93, 92, 237, 0.4);
+        }
+
+        .version-tag {
+            margin-top: auto;
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            opacity: 0.5;
+            font-family: monospace;
+            padding-left: 10px;
+        }
+
+        main { flex: 1; position: relative; display: flex; z-index: 1; }
+
+        .page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: none;
+            flex-direction: column;
+            padding: 40px 5% 40px 10%;
+            animation: fadeIn 0.3s ease;
+            overflow-y: auto;
+            box-sizing: border-box;
+        }
+
+        .page.active { display: flex; }
+
+        .dev-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: rgba(0,0,0,0.2);
+            border: 2px dashed var(--border);
+            border-radius: 24px;
+            margin-top: 30px;
+            color: var(--text-dim);
+        }
+
+        .visitor-pill {
+            margin-top: 30px; display: flex; align-items: center; gap: 15px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+            border: 1px solid var(--border); padding: 12px 25px; border-radius: 20px; width: fit-content;
+            backdrop-filter: blur(10px); box-shadow: 0 10px 30px rgba(0,0,0,0.2); position: relative; overflow: hidden;
+        }
+
+        .live-dot { width: 8px; height: 8px; background: #10b981; border-radius: 50%; box-shadow: 0 0 10px #10b981; animation: pulse-dot 2s infinite; }
+        @keyframes pulse-dot { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.5); opacity: 0.5; } 100% { transform: scale(1); opacity: 1; } }
+
+        .visitor-text { font-size: 0.9rem; letter-spacing: 1px; font-weight: 700; color: var(--text-dim); display: flex; align-items: center; gap: 8px; }
+        #count { color: var(--text-main); font-family: monospace; font-size: 1.1rem; }
+        
+        .active-users-container {
+            margin-top: auto; margin-bottom: 10px; display: flex; align-items: center; gap: 10px;
+            background: rgba(0,0,0,0.2); padding: 8px 20px; border-radius: 30px; border: 1px solid var(--border);
+            width: fit-content; color: var(--text-dim); font-size: 0.85rem; font-weight: 600; backdrop-filter: blur(5px);
+        }
+        .active-users-container span { color: var(--accent); font-family: monospace; font-size: 1rem; }
+
+        .beta-warning {
+            margin-top: 20px;
+            padding: 15px 25px;
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--accent);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            max-width: 500px;
+            line-height: 1.5;
+            z-index: 2;
+            position: relative;
+        }
+
+        .suggestion-form {
+            background: rgba(255, 255, 255, 0.02); 
+            border: 1px solid var(--border); 
+            padding: 35px; 
+            border-radius: 24px;
+            margin-top: 20px; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 20px; 
+            backdrop-filter: blur(15px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            max-width: 600px;
+        }
+        .suggestion-form label { 
+            font-size: 0.85rem; 
+            color: var(--text-dim); 
+            font-weight: 700; 
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: -10px;
+        }
+        .suggestion-form input, .suggestion-form textarea, .suggestion-form select {
+            background: rgba(0, 0, 0, 0.2); 
+            border: 1px solid var(--border); 
+            padding: 16px; 
+            border-radius: 14px; 
+            color: white; 
+            font-family: inherit; 
+            outline: none; 
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+        .suggestion-form input:focus, .suggestion-form textarea:focus, .suggestion-form select:focus {
+            border-color: var(--accent);
+            background: rgba(93, 92, 237, 0.05);
+            box-shadow: 0 0 15px rgba(93, 92, 237, 0.15);
+        }
+
+        .submit-form-btn {
+            background: var(--accent); 
+            color: white; 
+            border: none; 
+            padding: 18px; 
+            border-radius: 14px; 
+            font-weight: 800; 
+            cursor: pointer; 
+            transition: all 0.3s ease; 
+            margin-top: 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .submit-form-btn:hover {
+            filter: brightness(1.1);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(93, 92, 237, 0.3);
+        }
+
+        .partner-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 25px; margin-top: 25px; }
+        .partner-btn { 
+            background: var(--glass); border: 1px solid var(--border); border-radius: 20px; padding: 40px 20px; color: var(--text-main); text-decoration: none; text-align: center; font-weight: 800; font-size: 1.4rem; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; backdrop-filter: blur(5px); z-index: 2;
+        }
+        .partner-btn:hover { transform: translateY(-8px); border-color: var(--accent); box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(93, 92, 237, 0.2); color: white; }
+        
+        .partner-btn span { 
+            font-size: 0.7rem; 
+            font-weight: 500; 
+            opacity: 0.6; 
+            margin-top: 5px;
+            letter-spacing: 0.5px;
+        }
+
+        h1 { font-size: 3.8rem; font-weight: 800; line-height: 1.1; margin: 0; z-index: 2; position: relative;}
+        h1 span { color: var(--accent); }
+        .home-sub { font-size: 1.8rem; font-weight: 600; color: var(--text-main); margin-top: 10px; z-index: 2; position: relative;}
+        #statsDisplay { position: fixed; bottom: 20px; right: 20px; background: rgba(15, 19, 27, 0.8); backdrop-filter: blur(5px); padding: 8px 15px; border-radius: 10px; border: 1px solid var(--border); font-size: 0.85rem; font-family: monospace; color: var(--accent); z-index: 1000; display: none; }
+        .extra-nav { display: flex; gap: 15px; margin-top: 30px; flex-wrap: wrap; }
+        .sub-btn { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border); color: var(--text-main); padding: 12px 25px; border-radius: 12px; cursor: pointer; font-weight: 600; transition: 0.2s; }
+        .sub-page { display: none; margin-top: 40px; max-width: 800px; animation: fadeIn 0.2s ease; }
+        .sub-page.active { display: block; }
+        .search-container { margin-top: 20px; max-width: 400px; }
+        .game-search { width: 100%; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border); padding: 14px 20px; border-radius: 12px; color: var(--text-main); outline: none; }
+        
+        .game-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; margin-top: 30px; padding-bottom: 40px; }
+        .game-card { 
+            background: rgba(255, 255, 255, 0.05); 
+            border: 1px solid var(--border); 
+            padding: 30px 10px; 
+            border-radius: 18px; 
+            text-align: center; 
+            cursor: pointer; 
+            transition: all 0.3s ease; 
+            font-weight: 700; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            z-index: 2; 
+            position: relative;
+        }
+
+        .game-card:hover { 
+            transform: translateY(-5px); 
+            border-color: var(--accent); 
+            background: rgba(93, 92, 237, 0.1);
+            box-shadow: 0 0 20px rgba(93, 92, 237, 0.4); 
+            filter: brightness(1.2);
+        }
+        
+        /* AI Interface Styles */
+        .ai-disclaimer {
+            margin-top: 20px;
+            padding: 12px 20px;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            max-width: 800px;
+            line-height: 1.4;
+            text-align: center;
+        }
+        .ai-container {
+            display: flex;
+            flex-direction: column;
+            background: rgba(15, 19, 27, 0.8);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            height: 60vh;
+            max-width: 800px;
+            margin-top: 15px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+        .ai-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .message {
+            max-width: 80%;
+            padding: 12px 18px;
+            border-radius: 15px;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            position: relative;
+        }
+        .bot-msg { background: rgba(93, 92, 237, 0.15); align-self: flex-start; border-bottom-left-radius: 2px; color: var(--text-main); }
+        .user-msg { background: var(--accent); align-self: flex-end; border-bottom-right-radius: 2px; color: white; }
+        .ai-input-area {
+            padding: 20px;
+            background: rgba(0,0,0,0.2);
+            display: flex;
+            gap: 10px;
+        }
+        .ai-input {
+            flex: 1;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px;
+            color: white;
+            outline: none;
+        }
+
+        .source-badge {
+            display: block;
+            font-size: 0.65rem;
+            margin-top: 8px;
+            color: var(--accent);
+            text-transform: uppercase;
+            font-weight: 800;
+            letter-spacing: 1px;
+            opacity: 0.8;
+        }
+
+        .theme-grid { display: grid; grid-template-columns: repeat(2, 200px); gap: 20px; margin-top: 30px; }
+        .theme-btn { 
+            padding: 20px; border-radius: 15px; border: 1px solid var(--border); background: rgba(255,255,255,0.05); 
+            color: var(--text-main); font-weight: bold; cursor: pointer; text-align: center; transition: all 0.3s ease; position: relative; overflow: hidden;
+        }
+        .theme-btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+
+        .settings-section { margin-top: 30px; display: flex; flex-direction: column; gap: 10px; max-width: 450px; }
+        .settings-input { background: rgba(255,255,255,0.05); border: 1px solid var(--border); padding: 12px; border-radius: 10px; color: white; outline: none; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Neural Map Styles */
+        .neural-map-container {
+            margin: 10px 0;
+            padding: 15px;
+            background: rgba(93, 92, 237, 0.05);
+            border: 1px solid rgba(93, 92, 237, 0.2);
+            border-radius: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+        .neural-node {
+            background: var(--accent);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(93, 92, 237, 0.4);
+            animation: fadeIn 0.5s ease;
+        }
+    </style>
+</head>
+<body class="theme-dark">
+
+    <div id="statsDisplay">FPS: 00 | PING: 00ms</div>
+
+    <aside>
+        <div class="logo-container" onclick="showPage('home', document.querySelector('.nav-item'))">
+            <div class="vortex-logo">
+                <div class="spiral s1"></div>
+                <div class="spiral s2"></div>
+                <div class="spiral s3"></div>
+            </div>
+            <div class="logo-text">WHIRLPOOL</div>
+        </div>
+        
+        <div class="nav-item active" onclick="showPage('home', this)">
+            <div class="side-ico"><div class="ico-home"></div></div> Home
+        </div>
+        
+        <div class="nav-item" onclick="showPage('network', this)">
+            <div class="side-ico"><div class="ico-net"></div></div> Network
+        </div>
+        
+        <div class="nav-item" onclick="showPage('games', this)">
+            <div class="side-ico"><div class="ico-game"></div></div> Games
+        </div>
+        
+        <div class="nav-item" onclick="showPage('extra', this)">
+            <div class="side-ico"><div class="ico-extra"></div></div> Extra
+        </div>
+
+        <div class="nav-item" onclick="showPage('apps', this)">
+            <div class="side-ico">
+                <div class="ico-apps">
+                    <div class="dot"></div><div class="dot"></div>
+                    <div class="dot"></div><div class="dot"></div>
+                </div>
+            </div> Apps
+        </div>
+        
+        <div class="nav-item" onclick="showPage('settings', this)">
+            <div class="side-ico"><div class="ico-set"></div></div> Settings
+        </div>
+
+        <div class="version-tag">v2.5.0-stable</div>
+    </aside>
+
+    <main>
+        <div id="home" class="page active">
+            <h1>Welcome to<br><span>Whirlpool!</span></h1>
+            <div class="home-sub">Dive in!</div>
+            <div class="visitor-pill">
+                <div class="live-dot"></div>
+                <div class="visitor-text">VISITORS: <span id="count">...</span></div>
+            </div>
+            <div class="beta-warning">
+                <strong>Annoucements:</strong> ADMINS AINT TAKING SHI RAHHHHHHHHHHHHHHHHHHHHH
+            </div>
+            <div class="active-users-container">
+                <div class="live-dot" style="width: 6px; height: 6px;"></div>
+                <span id="liveUsers">1</span>&nbsp;current users
+            </div>
+        </div>
+
+        <div id="network" class="page">
+            <h1>Network</h1>
+            <div class="dev-container">
+                <h2 style="font-size: 2.5rem; margin-bottom: 10px;">ðŸš§ Under Construction</h2>
+                <p style="font-size: 1.2rem; opacity: 0.7;">The proxy system is currently in development. If you bug me about it you're unemployed.<br>Check back soon for updates!</p>
+            </div>
+        </div>
+
+        <div id="games" class="page">
+            <h1>Games</h1>
+            <div class="search-container">
+                <input type="text" class="game-search" id="gameSearch" placeholder="Search games..." onkeyup="filterGames()">
+            </div>
+            <div class="game-grid" id="gameGrid">
+                <div class="game-card" onclick="playGame(this)">Retro Bowl</div>
+                <div class="game-card" onclick="playGame(this)">Geometry Dash</div>
+                <div class="game-card" onclick="playGame(this)">Snow Rider 3D</div>
+                <div class="game-card" onclick="playGame(this)">99 Nights</div>
+                <div class="game-card" onclick="playGame(this)">Bank Robbery</div>
+                <div class="game-card" onclick="playGame(this)">1v1 LOL</div>
+                <div class="game-card" onclick="playGame(this)">Drive Mad</div>
+                <div class="game-card" onclick="playGame(this)">Monkey Mart</div>
+                <div class="game-card" onclick="playGame(this)">OvO</div>
+                <div class="game-card" onclick="playGame(this)">Space Waves</div>
+                <div class="game-card" onclick="playGame(this)">Tomb of the Mask</div>
+                <div class="game-card" onclick="playGame(this)">Baseball Bros</div>
+                <div class="game-card" onclick="playGame(this)">Squid Games</div>
+                <div class="game-card" onclick="playGame(this)">Red vs Blue</div>
+                <div class="game-card" onclick="playGame(this)">Tag</div>
+                <div class="game-card" onclick="playGame(this)">Null Kevin</div>
+                <div class="game-card" onclick="playGame(this)">Granny</div>
+                <div class="game-card" onclick="playGame(this)">ULTRAKILL</div>
+                <div class="game-card" onclick="playGame(this)">FNAF 1</div>
+                <div class="game-card" onclick="playGame(this)">FNAF 2</div>
+                <div class="game-card" onclick="playGame(this)">FNAF 3</div>
+                <div class="game-card" onclick="playGame(this)">FNAF 4</div>
+                <div class="game-card" onclick="playGame(this)">FNAF Pizzeria Sim</div>
+                <div class="game-card" onclick="playGame(this)">FNAF UCN</div>
+                <div class="game-card" onclick="playGame(this)">10 Minutes Till Dawn</div>
+                <div class="game-card" onclick="playGame(this)">2048</div>
+                <div class="game-card" onclick="playGame(this)">A Dance of Fire and Ice</div>
+                <div class="game-card" onclick="playGame(this)">A Dark Room</div>
+                <div class="game-card" onclick="playGame(this)">Agar.io Lite</div>
+                <div class="game-card" onclick="playGame(this)">AquaPark.io</div>
+                <div class="game-card" onclick="playGame(this)">Angry Birds</div>
+                <div class="game-card" onclick="playTarget(this)">Angry Birds Showdown</div>
+                <div class="game-card" onclick="playGame(this)">The Backrooms</div>
+                <div class="game-card" onclick="playGame(this)">Time Shooter 3</div>
+                <div class="game-card" onclick="playGame(this)">Cluster Rush</div>
+            </div>
+        </div>
+
+        <div id="extra" class="page">
+            <h1>Extra</h1>
+            <div class="extra-nav">
+                <button class="sub-btn" onclick="showExtra('logs')">Update Logs</button>
+                <button class="sub-btn" onclick="showExtra('suggestions')">Suggestions</button>
+                <button class="sub-btn" onclick="showExtra('partners')">Partners</button>
+                <button class="sub-btn" onclick="showExtra('about')">About</button>
+            </div>
+            <div id="logs" class="sub-page active">
+                <div class="extra-card">
+                    <h3 style="display: flex; align-items: center; gap: 10px;">
+                        <div class="vortex-logo" style="width: 24px; height: 24px;">
+                            <div class="spiral s1" style="width: 20px; height: 20px; border-width: 2px;"></div>
+                            <div class="spiral s2" style="width: 12px; height: 12px; border-width: 2px;"></div>
+                        </div> 
+                        Latest Updates
+                    </h3>
+                    <p><strong>[Feb 21, 2026]</strong> â€¢ Added real-time source fetching (Wikipedia/Dictionary). Improved parsing for 'Who/What/Where/When/Why' questions. </p>
+                    <p><strong>[Feb 20, 2026]</strong> â€¢ Added Source Verification & Universal Symbol Support.</p>
+                </div>
+            </div>
+            <div id="suggestions" class="sub-page">
+                <h3>Submit a Suggestion</h3>
+                <div id="form-container">
+                    <form id="my-form" class="suggestion-form" action="https://formspree.io/f/mqedanll" method="POST" onsubmit="handleFormSubmit(event)">
+                        <label>Category</label>
+                        <select name="type">
+                            <option value="game">Game Request</option>
+                            <option value="suggestion">General Suggestion</option>
+                            <option value="bug">Report a Bug</option>
+                        </select>
+                        <label>Your Name (Optional)</label>
+                        <input type="text" name="name" placeholder="Enter your name...">
+                        <label>Your Message</label>
+                        <textarea name="message" rows="5" placeholder="Share your ideas..." required></textarea>
+                        <button type="submit" class="submit-form-btn">Send Suggestion</button>
+                    </form>
+                </div>
+            </div>
+            <div id="partners" class="sub-page">
+                <div class="partner-grid">
+                    <a href="https://vtx.chat" target="_blank" class="partner-btn">Vortex<span>Modern Chatroom</span></a>
+                    <a href="https://petezahgames.com" target="_blank" class="partner-btn">PeteZah<span>Games Hub</span></a>
+                    <a href="https://learn.litesa.com/" target="_blank" class="partner-btn">Waves<span>Sleek Web Proxy</span></a>
+                </div>
+            </div>
+            <div id="about" class="sub-page">
+                <h3>About Whirlpool Games</h3>
+                <div class="beta-warning" style="max-width: 100%; border-left-color: var(--accent);">
+                    Whirlpool Games is basically my personal project to build the ultimate "boredom killer" for when you're stuck at school or listening to entire yap sessions. I got tired of finding cool sites only to have them blocked or filled with annoying pop-ups, so I started putting this together.
+Itâ€™s a mix of a bunch of retro and trending games, plus some extra tools like the built-in AI to help with homework (or just to chat with). Iâ€™m constantly updating the game list and tweaking the themes because I want it to look actually modern, not like those sketchy sites >:(. Itâ€™s still in beta, so Iâ€™m basically just building it out as I go based on what people suggest. <br><br>
+
+                </div>
+            </div>
+        </div>
+
+        <div id="apps" class="page">
+            <h1>Apps</h1>
+            <div class="game-grid">
+                <div class="game-card" onclick="window.open('https://meme-soundboard.net/', '_blank')">Soundboard</div>
+                <div class="game-card" onclick="showPage('ai_page')">AI</div>
+            </div>
+        </div>
+
+        <div id="ai_page" class="page">
+            <h1>Whirlpool<span> AI</span></h1>
+            <p style="color: var(--text-dim);">Your personal helper for schoolwork and more!</p>
+            <div class="ai-container">
+                <div class="ai-messages" id="aiMessages"></div>
+                <div class="ai-input-area">
+                    <input type="text" id="aiInput" class="ai-input" placeholder="What's on your mind?" onkeypress="if(event.key === 'Enter') sendAI()">
+                    <button class="sub-btn" onclick="sendAI()">Ask</button>
+                    <button class="sub-btn" onclick="clearAIMemory()" style="opacity: 0.6;">Reset</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="settings" class="page">
+            <h1>Change<span> Themes</span></h1>
+            <div class="theme-grid">
+                <div class="theme-btn" onclick="setTheme('light')">Light</div>
+                <div class="theme-btn" onclick="setTheme('dark')">Dark</div>
+                <div class="theme-btn" onclick="setTheme('cyber')">Cyber</div>
+                <div class="theme-btn" onclick="setTheme('ocean')">Ocean</div>
+                <div class="theme-btn" onclick="setTheme('forest')">Forest</div>
+                <div class="theme-btn" onclick="setTheme('solar')">Solar</div>
+            </div>
+            <h1 style="margin-top: 40px;">Background<span> Image</span></h1>
+            <div class="settings-section">
+                <input type="text" id="bgInput" class="settings-input" placeholder="Image URL...">
+                <div style="display: flex; gap: 10px;">
+                    <button class="sub-btn" onclick="saveBackground()">Apply</button>
+                    <button class="sub-btn" onclick="clearBackground()" style="opacity: 0.7;">Clear</button>
+                </div>
+            </div>
+            <div class="theme-grid"><div class="theme-btn" onclick="toggleStats()">Show FPS & Ping</div>
+            <div class="theme-btn" onclick="openAboutBlank()">Open about:blank</div>
+        </div>
+    </main>
+
+    <script>
+    // --- FPS & PING TRACKER ---
+        let lastPingTime = 0;
+        let ping = 0;
+        const statsDisplay = document.getElementById('statsDisplay');
+
+        let frameCount = 0;
+        let lastTime = performance.now();
+        let fps = 0;
+
+        function updateStats() {
+            const now = performance.now();
+            frameCount++;
+            if (now - lastTime >= 1000) {
+                fps = frameCount;
+                frameCount = 0;
+                lastTime = now;
+                updateStatsDisplay();
+            }
+            requestAnimationFrame(updateStats);
+        }
+        requestAnimationFrame(updateStats);
+
+        setInterval(async () => {
+            const start = performance.now();
+            try {
+                await fetch(window.location.href, { method: 'HEAD', cache: 'no-store' });
+                ping = Math.round(performance.now() - start);
+            } catch (e) { ping = "Error"; }
+            updateStatsDisplay();
+        }, 3000);
+       function openAboutBlank() {
+    const win = window.open('about:blank', '_blank');
+    if (win) {
+        // Get current title and favicon
+        const currentTitle = document.title;
+        const currentFavicon = document.querySelector("link[rel*='icon']")?.href || '';
+
+        // Apply basic page reset
+        win.document.body.style.margin = '0';
+        win.document.body.style.height = '100vh';
+        win.document.body.style.overflow = 'hidden';
+
+        // Set the Title
+        win.document.title = currentTitle;
+
+        // Set the Favicon
+        if (currentFavicon) {
+            const link = win.document.createElement('link');
+            link.rel = 'icon';
+            link.href = currentFavicon;
+            win.document.head.appendChild(link);
+        }
+
+        // Create and inject the iframe
+        const iframe = win.document.createElement('iframe');
+        iframe.style.border = 'none';
+        iframe.style.width = '100%';
+        iframe.style.height = '100%';
+        iframe.style.margin = '0';
+        iframe.src = window.location.href;
+        
+        win.document.body.appendChild(iframe);
+    }
+}
+        
+        function updateStatsDisplay() {
+            statsDisplay.innerText = `FPS: ${fps} | PING: ${ping}ms`;
+        }
+
+        // --- SUGGESTION FORM LOGIC ---
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const form = e.target;
+            const data = new FormData(form);
+            fetch(form.action, {
+                method: 'POST',
+                body: data,
+                headers: { 'Accept': 'application/json' }
+            }).then(response => {
+                if (response.ok) {
+                    const container = document.getElementById('form-container');
+                    container.innerHTML = `
+                        <div class="suggestion-form" style="text-align: center; align-items: center;">
+                            <h2 style="color: var(--accent); margin: 0;">Thank you for submitting!</h2>
+                            <p style="color: var(--text-dim);">Your feedback helps make Whirlpool better.</p>
+                            <button class="submit-form-btn" style="width: 100%;" onclick="resetForm()">Submit Another</button>
+                        </div>
+                    `;
+                }
+            });
+        }
+
+        function resetForm() {
+            const container = document.getElementById('form-container');
+            container.innerHTML = `
+                <form id="my-form" class="suggestion-form" action="https://formspree.io/f/mqedanll" method="POST" onsubmit="handleFormSubmit(event)">
+                    <label>Category</label>
+                    <select name="type">
+                        <option value="game">Game Request</option>
+                        <option value="suggestion">General Suggestion</option>
+                        <option value="bug">Report a Bug</option>
+                    </select>
+                    <label>Your Name (Optional)</label>
+                    <input type="text" name="name" placeholder="Enter your name...">
+                    <label>Your Message</label>
+                    <textarea name="message" rows="5" placeholder="Share your ideas..." required></textarea>
+                    <button type="submit" class="submit-form-btn">Send Suggestion</button>
+                </form>
+            `;
+        }
+
+        // --- AI LOGIC CORE ---
+        const chatBox = document.getElementById('aiMessages');
+        let chatHistory = JSON.parse(localStorage.getItem('whirlpool_chat')) || [];
+
+        function initChat() {
+            if (chatHistory.length > 0) {
+                chatBox.innerHTML = '';
+                chatHistory.forEach(msg => appendToUI(msg.text, msg.type, msg.source));
+            } else {
+                appendMsg("Hey there, how can I help?", 'bot-msg');
+            }
+        }
+        initChat();
+
+        async function sendAI() {
+            const input = document.getElementById('aiInput');
+            const msg = input.value.trim();
+            if (!msg) return;
+            appendMsg(msg, 'user-msg');
+            input.value = '';
+            const loader = document.createElement('div');
+            loader.className = 'message bot-msg';
+            loader.id = 'ai-loader';
+            loader.innerHTML = `<div style="font-style: italic; opacity: 0.6; margin-bottom: 8px;">Consulting sources...</div><div class="neural-map-container" id="currentMap"></div>`;
+            chatBox.appendChild(loader);
+            chatBox.scrollTop = chatBox.scrollHeight;
+            const result = await processComplexThought(msg);
+            const loaderToRemove = document.getElementById('ai-loader');
+            if(loaderToRemove) loaderToRemove.remove();
+            appendMsg(result.text, 'bot-msg', result.source);
+        }
+
+        async function processComplexThought(input) {
+            const rawOriginal = input.toLowerCase().trim();
+            const raw = rawOriginal.replace(/[.,!?]/g, ''); 
+            const mapNode = document.getElementById('currentMap');
+            const addNode = (t) => { if(mapNode){const n=document.createElement('div'); n.className='neural-node'; n.innerText=t; mapNode.appendChild(n);}};
+            
+            if (/who are you|what are you|are you a bot|are you an ai|what can you do/.test(raw)) {
+                addNode("IDENTITY");
+                return { text: "I am Whirlpool AI! I can chat with you, solve complex math problems, tell you jokes, and look up facts or definitions using real-world sources. What do you want to explore?", source: "Whirlpool AI" };
+            }
+            if (/who made you|who created you|where did you come from/.test(raw)) {
+                addNode("ORIGIN");
+                return { text: "I was built for the Whirlpool Games platform to be your smart personal helper!", source: "Whirlpool AI" };
+            }
+            if (/^(hello|hi|hey|greetings|sup|howdy|yo|good morning|good afternoon|good evening|good night|heya)$/i.test(raw) || raw.includes("say hi")) {
+                addNode("GREETING");
+                return { text: "Hey there! How can I help you today? You can ask me a question, give me some math, or just chat.", source: "Whirlpool AI" };
+            }
+            if (/how are you|hows it going|how are things|how are you doing|whats up/.test(raw)) {
+                addNode("CONVERSATION");
+                return { text: "I'm running smoothly and ready to help! How are you doing?", source: "Whirlpool AI" };
+            }
+            if (/thank you|thanks|thx|appreciate it/.test(raw)) {
+                addNode("POLITENESS");
+                return { text: "You're very welcome! Let me know if you need anything else.", source: "Whirlpool AI" };
+            }
+            if (/i am (sad|bad|angry|mad|upset|depressed|tired|bored)/.test(raw) || /i feel (sad|bad|angry|mad|upset|depressed|tired|bored)/.test(raw)) {
+                addNode("EMPATHY");
+                return { text: "I'm sorry to hear that. Sometimes taking a quick break or playing a game helps! I can also tell you a joke if you want?", source: "Whirlpool AI" };
+            }
+            if (/i am (happy|good|great|excited|awesome|fine)/.test(raw) || /i feel (happy|good|great|excited|awesome|fine)/.test(raw)) {
+                addNode("EMPATHY");
+                return { text: "That's great to hear! I'm glad things are going well. What's on your mind today?", source: "Whirlpool AI" };
+            }
+            if (/^(ok|okay|cool|awesome|wow|nice|great|sweet|bet)$/i.test(raw)) {
+                addNode("ACKNOWLEDGMENT");
+                return { text: "Right on! What should we look at next?", source: "Whirlpool AI" };
+            }
+            if (/^(yes|yeah|yep|sure|why not)$/i.test(raw)) {
+                addNode("AGREEMENT");
+                return { text: "Awesome. Just tell me what you needâ€”whether it's a math problem, a definition, or a joke!", source: "Whirlpool AI" };
+            }
+            if (/^(no|nah|nope)$/i.test(raw)) {
+                 addNode("DISAGREEMENT");
+                 return { text: "No worries! Let me know when you're ready.", source: "Whirlpool AI" };
+            }
+            if (raw.includes("joke") || raw.includes("make me laugh") || raw.includes("funny")) {
+                addNode("HUMOR DATABASE");
+                try {
+                    const res = await fetch('https://official-joke-api.appspot.com/random_joke');
+                    const data = await res.json();
+                    return { text: `${data.setup} ... **${data.punchline}**`, source: "Whirlpool Humor DB" };
+                } catch(e) {
+                    return { text: "Why do programmers prefer dark mode? Because light attracts bugs!", source: "Whirlpool Humor DB" };
+                }
+            }
+            if (/[0-9+\-*/^=()\[\]]/.test(rawOriginal) || /sin|cos|tan|sqrt|log|pi|derivative|integral|matrix|sum/i.test(rawOriginal)) {
+                addNode("MATH ENGINE");
+                try {
+                    const mathClean = rawOriginal.replace(/calculate|solve|what is|what's/gi, '').trim();
+                    const res = await fetch(`https://api.mathjs.org/v4/?expr=${encodeURIComponent(mathClean)}`);
+                    if (res.ok) return { text: `Computed result: **${await res.text()}**`, source: "MathJS Engine" };
+                } catch (e) {}
+            }
+            const questionMatch = rawOriginal.match(/^(who|what|where|when|why)(?:\s+(?:is|are|was|were|did|do|does))?\s+(.*)/i);
+            const defineMatch = rawOriginal.match(/^(define|meaning of)\s+(.*)/i);
+            if (questionMatch || defineMatch) {
+                let query = ""; let isWhy = false;
+                if (questionMatch) { query = questionMatch[2]; if (questionMatch[1].toLowerCase() === 'why') isWhy = true; } 
+                else if (defineMatch) { query = defineMatch[2]; }
+                query = query.replace(/\?$/, '').trim(); 
+                if (isWhy && query.length < 3) {
+                    addNode("RECALLING CONTEXT");
+                    const lastUserMsg = chatHistory.filter(m => m.type === 'user-msg').slice(-2, -1)[0]?.text || "that";
+                    return { text: `Continuing our talk about "${lastUserMsg}": Could you specify what you'd like to know why about?`, source: "Conversational Memory" };
+                }
+                addNode("KNOWLEDGE BASE");
+                try {
+                    const wikiRes = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(query)}`);
+                    if (wikiRes.ok) {
+                        const wikiData = await wikiRes.json();
+                        if (wikiData.type !== "disambiguation" && wikiData.extract) {
+                            const britLink = `\n\n*[Search Britannica for more on "${query}"](https://www.britannica.com/search?query=${encodeURIComponent(query)})*`;
+                            return { text: wikiData.extract + britLink, source: "Wikipedia API & Britannica" };
+                        }
+                    }
+                } catch(e) {}
+                addNode("DICTIONARY API");
+                try {
+                    const dictQuery = query.split(' ')[0];
+                    const dictRes = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(dictQuery)}`);
+                    if (dictRes.ok) {
+                        const dictData = await dictRes.json();
+                        if (dictData[0] && dictData[0].meanings[0]) {
+                            const definition = dictData[0].meanings[0].definitions[0].definition;
+                            return { text: `**${dictQuery}**: ${definition}`, source: "Free Dictionary API" };
+                        }
+                    }
+                } catch(e) {}
+            }
+            if (raw === "why" || raw === "how" || raw.includes("tell me more")) {
+                addNode("RECALLING CONTEXT");
+                const lastUserMsg = chatHistory.filter(m => m.type === 'user-msg').slice(-2, -1)[0]?.text || "";
+                return { text: `Continuing our talk about "${lastUserMsg}": What specifically would you like to know?`, source: "Conversational Memory" };
+            }
+            return { text: "I'm keeping track of this chat! I might not have the exact answer, but try asking me a 'who', 'what', 'where', 'when', or 'why' question, give me a math problem, or just say hi!", source: "Whirlpool AI" };
+        }
+
+        function appendMsg(text, type, source) {
+            chatHistory.push({ text, type, source });
+            localStorage.setItem('whirlpool_chat', JSON.stringify(chatHistory));
+            appendToUI(text, type, source);
+        }
+
+        function appendToUI(text, type, source) {
+            const div = document.createElement('div');
+            div.className = `message ${type}`;
+            div.innerHTML = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            if (source) div.innerHTML += `<span class="source-badge">Source: ${source}</span>`;
+            chatBox.appendChild(div);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function clearAIMemory() {
+            chatBox.innerHTML = ''; chatHistory = []; localStorage.removeItem('whirlpool_chat');
+            appendMsg("Hey there, how can I help?", "bot-msg");
+        }
+
+        // --- UI & OTHER LOGIC ---
+        function showPage(id, el) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            const pg = document.getElementById(id);
+            if(pg) pg.classList.add('active');
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            if(el) el.classList.add('active');
+        }
+        function showExtra(id) {
+            document.querySelectorAll('.sub-page').forEach(p => p.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+        function setTheme(t) { document.body.className = 'theme-' + t; localStorage.setItem('whirlpool_theme', t); }
+        function saveBackground() {
+            const u = document.getElementById('bgInput').value; if(!u) return;
+            const s = document.createElement('style'); s.id = "custom-bg-style";
+            s.innerHTML = `body::before { background: url('${u}') center/cover no-repeat fixed !important; animation: none !important; }`;
+            const old = document.getElementById('custom-bg-style'); if(old) old.remove();
+            document.head.appendChild(s); localStorage.setItem('whirlpool_bg', u);
+        }
+        function clearBackground() {
+            const old = document.getElementById('custom-bg-style'); if(old) old.remove();
+            localStorage.removeItem('whirlpool_bg'); document.getElementById('bgInput').value = "";
+        }
+        function filterGames() {
+            const v = document.getElementById('gameSearch').value.toLowerCase();
+            document.querySelectorAll('.game-card').forEach(c => {
+                c.style.display = c.innerText.toLowerCase().includes(v) ? 'flex' : 'none';
+            });
+        }
+        function toggleStats() {
+            const d = document.getElementById('statsDisplay');
+            d.style.display = (d.style.display === 'none' || d.style.display === '') ? 'block' : 'none';
+        }
+function playGame(el) {
+    const gameName = el.innerText.trim();
+    
+    // --- CLUSTER RUSH: RESPONSIVE ADAPTIVE VERSION ---
+    if (gameName === "Cluster Rush") {
+        const gameWindow = window.open("", "_blank");
+        gameWindow.document.write(`
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>Cluster Rush</title>
+                <style>
+                    html, body { margin: 0; padding: 0; width: 100%; height: 100%; background: #000; overflow: hidden; font-family: sans-serif; }
+                    
+                    #splash {
+                        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                        background: #0b0e14; display: flex; flex-direction: column;
+                        align-items: center; justify-content: center; z-index: 999999;
+                        color: white; opacity: 1; transition: opacity 1s ease;
+                    }
+
+                    .content-wrapper {
+                        opacity: 0;
+                        display: flex; flex-direction: column; align-items: center;
+                        animation: fadeInContent 4s forwards;
+                    }
+
+                    @keyframes fadeInContent {
+                        to { opacity: 1; }
+                    }
+
+                    .splash-text { font-size: 1.8rem; font-weight: 800; margin-bottom: 25px; letter-spacing: 2px; }
+                    .vortex-logo-splash { width: 100px; height: 100px; position: relative; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+                    
+                    .spiral { 
+                        position: absolute; 
+                        border: 4px solid transparent; 
+                        border-radius: 50%; 
+                        transform: rotate(0deg);
+                        animation: spin var(--d) linear infinite; 
+                    }
+                    
+                    .s1 { width: 90px; height: 90px; border-top-color: #5d5ced; --d: 2s; }
+                    .s2 { width: 70px; height: 70px; border-right-color: #a855f7; --d: 1.5s; animation-direction: reverse; }
+                    .s3 { width: 50px; height: 50px; border-bottom-color: #4ade80; --d: 1s; }
+                    .s4 { width: 30px; height: 30px; border-left-color: #a855f7; --d: 0.8s; animation-direction: reverse; }
+
+                    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+                    .loading-text {
+                        font-family: monospace;
+                        font-size: 1.2rem;
+                        color: #8b949e;
+                        visibility: hidden;
+                    }
+                    .dots::after {
+                        content: '';
+                        animation: typewriter 1.5s steps(8) infinite;
+                    }
+                    @keyframes typewriter {
+                        0% { content: ''; }
+                        14% { content: '.'; }
+                        28% { content: '..'; }
+                        42% { content: '...'; }
+                        57% { content: '....'; }
+                        71% { content: '.....'; }
+                        85% { content: '......'; }
+                        100% { content: ''; }
+                    }
+                    /* Adaptive Fullscreen CSS */
+                    #canvas { width: 100vw; height: 100vh; display: block; object-fit: contain; }
+                </style>
+            </head>
+            <body>
+                <div id="splash">
+                    <div class="content-wrapper">
+                        <div class="splash-text">Presented by Whirlpool Games</div>
+                        <div class="vortex-logo-splash">
+                            <div class="spiral s1"></div>
+                            <div class="spiral s2"></div>
+                            <div class="spiral s3"></div>
+                            <div class="spiral s4"></div>
+                        </div>
+                        <div id="loadingMsg" class="loading-text">Loading<span class="dots"></span></div>
+                    </div>
+                </div>
+                <canvas id="canvas"></canvas>
+                <script>
+                    var Module = { 
+                        TOTAL_MEMORY: 268435456, 
+                        dataUrl: "https://cdn.jsdelivr.net/gh/Angry512/nacho-cs.github.io@b7c6a3b8a640c1ce01c5c9e89b79c093fdab1f55/Release/NG.data", 
+                        codeUrl: "https://cdn.jsdelivr.net/gh/Angry512/nacho-cs.github.io@b7c6a3b8a640c1ce01c5c9e89b79c093fdab1f55/Release/NG.js", 
+                        asmUrl: "
